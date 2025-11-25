@@ -1,0 +1,19 @@
+{
+  "name": "skill-bytes-redirect",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anb2473/Skill-Bytes-Redirect.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anb2473/Skill-Bytes-Redirect/issues"
+  },
+  "homepage": "https://github.com/anb2473/Skill-Bytes-Redirect#readme",
+  "description": ""
+}
