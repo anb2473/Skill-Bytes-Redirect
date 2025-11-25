@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "echo \"No build required\""
+    "build": "mkdir dist && cp index.html dist/index.html"
   },
   "repository": {
     "type": "git",
