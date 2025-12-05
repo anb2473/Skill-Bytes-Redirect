@@ -98,7 +98,18 @@
     </style>
     <script>
         setTimeout(() => {
-            window.location.replace("https://1xmltp-ip-96-241-22-239.tunnelmole.net");
+			fetch('redirect.json')
+				.then(res => res.json())
+				.then(data => {
+					try {
+						// check if primary url available
+						const check = await fetch(data.url + "/ping", { method: "GET" })
+						// if primary available redirect
+						window.location.replace(data.url)
+					} except {
+						window.location.replace("https://skill-bytes-fb.netlify.app")
+					}
+				})
         }, 2000);
     </script>
 </head>
