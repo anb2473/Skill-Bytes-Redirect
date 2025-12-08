@@ -105,7 +105,7 @@
 						// check if primary url available
 						const check = await fetch(data.url + "/ping", { method: "GET" })
 						// if primary available redirect
-						window.location.replace(data.url)
+						window.location.replace(data.fb_url)
 					} except {
 						window.location.replace("https://skill-bytes-fb.netlify.app")
 					}
