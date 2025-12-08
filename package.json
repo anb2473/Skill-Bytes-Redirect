@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "mkdir dist && rsync -av ./ dist/"
+    "build": "rm -rf dist && mkdir dist && rsync -av ./ dist/"
   },
   "repository": {
     "type": "git",
