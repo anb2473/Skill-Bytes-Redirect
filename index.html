@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="2; url=https://1xmltp-ip-96-241-22-239.tunnelmole.net">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting...</title>
     <style>
@@ -97,20 +96,16 @@
         }
     </style>
     <script>
-        setTimeout(() => {
-			fetch('redirect.json')
-				.then(res => res.json())
-				.then(data => {
-					try {
-						// check if primary url available
-						const check = await fetch(data.url + "/ping", { method: "GET" })
-						// if primary available redirect
-						window.location.replace(data.fb_url)
-					} except {
-						window.location.replace("https://skill-bytes-fb.netlify.app")
-					}
-				})
-        }, 2000);
+        setTimeout(async () => {
+		    try {
+		        const res = await fetch('redirect.json');
+		        const data = await res.json();
+		        const check = await fetch(data.url + "/ping", { method: "GET" });
+		        window.location.replace(data.url);
+		    } catch (error) {
+		        window.location.replace(data.fb_url);
+		    }
+		}, 2000);
     </script>
 </head>
 <body>
