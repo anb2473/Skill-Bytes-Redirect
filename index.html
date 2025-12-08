@@ -97,9 +97,9 @@
     </style>
     <script>
         setTimeout(async () => {
+			const res = await fetch('redirect.json');
+			const data = await res.json();
 		    try {
-		        const res = await fetch('redirect.json');
-		        const data = await res.json();
 		        const check = await fetch(data.url + "/ping", { method: "GET" });
 		        window.location.replace(data.url);
 		    } catch (error) {
