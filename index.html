@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+<<<<<<< HEAD
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,6 +10,78 @@
                 margin: 0;
                 padding: 0;
                 box-sizing: border-box;
+=======
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            overflow: hidden;
+        }
+        
+        .container {
+            text-align: center;
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            position: relative;
+            animation: float 2s ease-in-out infinite;
+        }
+        
+        .logo svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+        }
+        
+        h1 {
+            color: white;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+        
+        .progress-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin: 0 auto;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: white;
+            border-radius: 10px;
+            animation: progress 2s ease-in-out forwards;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+>>>>>>> e08961b41068aa645340e43c6752542b992ae05b
             }
 
             body {
@@ -28,6 +101,7 @@
                 max-width: 500px;
                 width: 100%;
             }
+<<<<<<< HEAD
 
             .card {
                 background: #000;
@@ -295,4 +369,36 @@
             checkAndRedirect();
         </script>
     </body>
+=======
+        }
+    </style>
+    <script>
+        setTimeout(async () => {
+			const res = await fetch('redirect.json');
+			const data = await res.json();
+		    try {
+		        const check = await fetch(data.url + "/ping", { method: "GET" });
+		        window.location.replace(data.url);
+		    } catch (error) {
+		        window.location.replace(data.fb_url);
+		    }
+		}, 2000);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" stroke="white" stroke-width="6" fill="none" opacity="0.3"/>
+                <path d="M50 20 L65 45 L50 40 L35 45 Z" fill="white"/>
+                <circle cx="50" cy="60" r="8" fill="white"/>
+            </svg>
+        </div>
+        <h1>Redirecting...</h1>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+    </div>
+</body>
+>>>>>>> e08961b41068aa645340e43c6752542b992ae05b
 </html>
