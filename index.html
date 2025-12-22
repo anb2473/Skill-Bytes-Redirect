@@ -24,24 +24,19 @@
                 padding: 20px;
             }
 
-            .card {
-                background: #000;
-                border: 2px solid #fff;
-                border-radius: 8px;
-                padding: 40px;
-                max-width: 500px;
-                width: 100%;
+            .container {
                 text-align: center;
+                max-width: 400px;
             }
 
             .spinner {
-                width: 48px;
-                height: 48px;
-                border: 3px solid #fff;
+                width: 64px;
+                height: 64px;
+                border: 4px solid #fff;
                 border-top-color: transparent;
                 border-radius: 50%;
                 animation: spin 1s linear infinite;
-                margin: 0 auto 30px;
+                margin: 0 auto 40px;
             }
 
             @keyframes spin {
@@ -50,77 +45,99 @@
                 }
             }
 
+            .checkmark {
+                width: 64px;
+                height: 64px;
+                border: 4px solid #fff;
+                border-radius: 50%;
+                margin: 0 auto 40px;
+                display: none;
+                position: relative;
+            }
+
+            .checkmark:after {
+                content: "";
+                position: absolute;
+                left: 18px;
+                top: 10px;
+                width: 12px;
+                height: 24px;
+                border: solid #fff;
+                border-width: 0 4px 4px 0;
+                transform: rotate(45deg);
+            }
+
+            .warning {
+                width: 64px;
+                height: 64px;
+                border: 4px solid #fff;
+                border-radius: 50%;
+                margin: 0 auto 40px;
+                display: none;
+                position: relative;
+            }
+
+            .warning:before {
+                content: "!";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 32px;
+                font-weight: bold;
+                color: #fff;
+            }
+
             h1 {
-                font-size: 24px;
-                margin-bottom: 15px;
+                font-size: 28px;
+                margin-bottom: 16px;
                 font-weight: 600;
             }
 
             .message {
-                font-size: 14px;
-                opacity: 0.8;
-                line-height: 1.5;
+                font-size: 16px;
+                opacity: 0.9;
+                line-height: 1.6;
             }
 
-            .url-display {
-                margin-top: 25px;
-                padding: 15px;
-                background: #000;
-                border: 1px solid #fff;
-                border-radius: 6px;
-                font-family: monospace;
-                font-size: 12px;
-                text-align: left;
-                word-break: break-all;
+            .show {
+                display: block !important;
             }
 
-            .url-line {
-                margin: 8px 0;
-            }
-
-            .url-label {
-                opacity: 0.6;
-                margin-right: 8px;
+            .hide {
+                display: none !important;
             }
         </style>
     </head>
     <body>
-        <div class="card">
+        <div class="container">
             <div class="spinner" id="spinner"></div>
-            <h1 id="title">Connecting...</h1>
-            <p class="message" id="message">Checking server status...</p>
-            <div id="urls" class="url-display" style="display: none"></div>
+            <div class="checkmark" id="checkmark"></div>
+            <div class="warning" id="warning"></div>
+            <h1 id="title">Connecting to server...</h1>
+            <p class="message" id="message">Please wait while we connect you</p>
         </div>
 
         <script>
             async function checkAndRedirect() {
                 var titleEl = document.getElementById("title");
                 var messageEl = document.getElementById("message");
-                var urlsEl = document.getElementById("urls");
                 var spinnerEl = document.getElementById("spinner");
+                var checkmarkEl = document.getElementById("checkmark");
+                var warningEl = document.getElementById("warning");
 
                 try {
                     var configData = await fetch("./redirect.json");
                     var config = await configData.json();
 
                     if (!config.primary_url || !config.fallback_url) {
-                        spinnerEl.style.display = "none";
-                        titleEl.textContent = "Configuration Error";
+                        spinnerEl.className = "spinner hide";
+                        warningEl.className = "warning show";
+                        titleEl.textContent = "Unable to Connect";
                         messageEl.textContent =
-                            "redirect.json must contain primary_url and fallback_url";
+                            "Configuration error. Please contact support.";
                         return;
                     }
-
-                    urlsEl.innerHTML =
-                        '<div class="url-line"><span class="url-label">Primary:</span>' +
-                        config.primary_url +
-                        '</div><div class="url-line"><span class="url-label">Fallback:</span>' +
-                        config.fallback_url +
-                        "</div>";
-                    urlsEl.style.display = "block";
-
-                    messageEl.textContent =
-                        "Pinging " + config.primary_url + "...";
 
                     try {
                         var controller = new AbortController();
@@ -136,25 +153,30 @@
 
                         clearTimeout(timeoutId);
 
-                        titleEl.textContent = "Connected";
-                        messageEl.textContent =
-                            "Redirecting to primary server...";
+                        spinnerEl.className = "spinner hide";
+                        checkmarkEl.className = "checkmark show";
+                        titleEl.textContent = "Connected!";
+                        messageEl.textContent = "Taking you there now...";
+
                         setTimeout(function () {
                             window.location.href = config.primary_url;
-                        }, 800);
+                        }, 1000);
                     } catch (error) {
-                        titleEl.textContent = "Using Fallback";
-                        messageEl.textContent =
-                            "Primary unavailable. Redirecting to fallback...";
+                        spinnerEl.className = "spinner hide";
+                        checkmarkEl.className = "checkmark show";
+                        titleEl.textContent = "Connecting...";
+                        messageEl.textContent = "Just a moment...";
+
                         setTimeout(function () {
                             window.location.href = config.fallback_url;
-                        }, 800);
+                        }, 1000);
                     }
                 } catch (error) {
-                    spinnerEl.style.display = "none";
-                    titleEl.textContent = "Error";
+                    spinnerEl.className = "spinner hide";
+                    warningEl.className = "warning show";
+                    titleEl.textContent = "Connection Issue";
                     messageEl.textContent =
-                        "Failed to load configuration: " + error.message;
+                        "Please refresh the page or try again later.";
                 }
             }
 
