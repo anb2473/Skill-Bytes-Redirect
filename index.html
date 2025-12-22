@@ -1,120 +1,298 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="2; url=https://1xmltp-ip-96-241-22-239.tunnelmole.net">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            overflow: hidden;
-        }
-        
-        .container {
-            text-align: center;
-            animation: fadeIn 0.6s ease-out;
-        }
-        
-        .logo {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 30px;
-            position: relative;
-            animation: float 2s ease-in-out infinite;
-        }
-        
-        .logo svg {
-            width: 100%;
-            height: 100%;
-            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
-        }
-        
-        h1 {
-            color: white;
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            letter-spacing: -0.5px;
-        }
-        
-        .progress-bar {
-            width: 200px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            margin: 0 auto;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: white;
-            border-radius: 10px;
-            animation: progress 2s ease-in-out forwards;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Connecting...</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Arial,
+                    sans-serif;
+                background: #000;
+                color: #fff;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
             }
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        
-        @keyframes progress {
-            from {
-                width: 0%;
-            }
-            to {
+
+            .container {
+                max-width: 500px;
                 width: 100%;
             }
-        }
-    </style>
-    <script>
-        setTimeout(() => {
-            window.location.replace("https://1xmltp-ip-96-241-22-239.tunnelmole.net");
-        }, 2000);
-    </script>
-</head>
-<body>
-    <div class="container">
-        <div class="logo">
-            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="45" stroke="white" stroke-width="6" fill="none" opacity="0.3"/>
-                <path d="M50 20 L65 45 L50 40 L35 45 Z" fill="white"/>
-                <circle cx="50" cy="60" r="8" fill="white"/>
-            </svg>
+
+            .card {
+                background: #000;
+                border: 2px solid #fff;
+                border-radius: 8px;
+                padding: 40px;
+                box-shadow: 0 20px 60px rgba(255, 255, 255, 0.1);
+            }
+
+            .icon-container {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 30px;
+            }
+
+            .spinner {
+                width: 64px;
+                height: 64px;
+                border: 4px solid #fff;
+                border-top-color: transparent;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .icon {
+                width: 64px;
+                height: 64px;
+                background: #fff;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                display: none;
+            }
+
+            .icon svg {
+                width: 40px;
+                height: 40px;
+                stroke: #000;
+                stroke-width: 2;
+                fill: none;
+            }
+
+            .icon.show {
+                display: flex;
+            }
+
+            .content {
+                text-align: center;
+            }
+
+            h2 {
+                font-size: 28px;
+                font-weight: bold;
+                margin-bottom: 15px;
+            }
+
+            .message {
+                font-size: 14px;
+                margin-bottom: 25px;
+                opacity: 0.9;
+            }
+
+            .url-info {
+                background: #000;
+                border: 1px solid #fff;
+                border-radius: 6px;
+                padding: 20px;
+                text-align: left;
+                font-family: monospace;
+                font-size: 12px;
+            }
+
+            .url-row {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 10px;
+            }
+
+            .url-row:last-child {
+                margin-bottom: 0;
+            }
+
+            .url-label {
+                opacity: 0.6;
+                margin-right: 10px;
+            }
+
+            .url-value {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                flex: 1;
+                text-align: right;
+            }
+
+            .hidden {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="card">
+                <div class="icon-container">
+                    <div id="spinner" class="spinner"></div>
+                    <div id="success-icon" class="icon">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M5 13l4 4L19 7"
+                            />
+                        </svg>
+                    </div>
+                    <div id="fallback-icon" class="icon">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                            />
+                        </svg>
+                    </div>
+                    <div id="error-icon" class="icon">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M6 18L18 6M6 6l12 12"
+                            />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <h2 id="status-title">Connecting...</h2>
+                    <p class="message" id="status-message">
+                        Checking server status...
+                    </p>
+
+                    <div id="url-info" class="url-info hidden">
+                        <div class="url-row">
+                            <span class="url-label">Primary:</span>
+                            <span class="url-value" id="primary-url"></span>
+                        </div>
+                        <div class="url-row">
+                            <span class="url-label">Fallback:</span>
+                            <span class="url-value" id="fallback-url"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <h1>Redirecting...</h1>
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
-        </div>
-    </div>
-</body>
+
+        <script>
+            async function checkAndRedirect() {
+                try {
+                    // Read redirect.json
+                    const redirectData = await window.fs.readFile(
+                        "./redirect.json",
+                        { encoding: "utf8" },
+                    );
+                    const pkg = JSON.parse(redirectData);
+
+                    if (!pkg.primary_url || !pkg.fallback_url) {
+                        showStatus(
+                            "error",
+                            "Error",
+                            "redirect.json missing primary_url or fallback_url",
+                        );
+                        return;
+                    }
+
+                    // Display URLs
+                    document.getElementById("primary-url").textContent =
+                        pkg.primary_url;
+                    document.getElementById("fallback-url").textContent =
+                        pkg.fallback_url;
+                    document
+                        .getElementById("url-info")
+                        .classList.remove("hidden");
+
+                    document.getElementById("status-message").textContent =
+                        `Pinging ${pkg.primary_url}...`;
+
+                    // Try to ping primary URL
+                    try {
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(
+                            () => controller.abort(),
+                            5000,
+                        );
+
+                        await fetch(pkg.primary_url, {
+                            method: "HEAD",
+                            mode: "no-cors",
+                            signal: controller.signal,
+                        });
+
+                        clearTimeout(timeoutId);
+
+                        // Primary succeeded
+                        showStatus(
+                            "success",
+                            "Connected",
+                            "Primary server is online. Redirecting...",
+                        );
+                        setTimeout(() => {
+                            window.location.href = pkg.primary_url;
+                        }, 1000);
+                    } catch (error) {
+                        // Primary failed, use fallback
+                        showStatus(
+                            "fallback",
+                            "Using Fallback",
+                            "Primary server unavailable. Redirecting to fallback...",
+                        );
+                        setTimeout(() => {
+                            window.location.href = pkg.fallback_url;
+                        }, 1000);
+                    }
+                } catch (error) {
+                    showStatus("error", "Error", `Error: ${error.message}`);
+                }
+            }
+
+            function showStatus(type, title, message) {
+                // Hide spinner
+                document.getElementById("spinner").style.display = "none";
+
+                // Show appropriate icon
+                document
+                    .getElementById("success-icon")
+                    .classList.remove("show");
+                document
+                    .getElementById("fallback-icon")
+                    .classList.remove("show");
+                document.getElementById("error-icon").classList.remove("show");
+
+                if (type === "success") {
+                    document
+                        .getElementById("success-icon")
+                        .classList.add("show");
+                } else if (type === "fallback") {
+                    document
+                        .getElementById("fallback-icon")
+                        .classList.add("show");
+                } else if (type === "error") {
+                    document.getElementById("error-icon").classList.add("show");
+                }
+
+                // Update text
+                document.getElementById("status-title").textContent = title;
+                document.getElementById("status-message").textContent = message;
+            }
+
+            // Start the check when page loads
+            checkAndRedirect();
+        </script>
+    </body>
 </html>
