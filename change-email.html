@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Connecting...</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Arial,
+                    sans-serif;
+                background: #000;
+                color: #fff;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+            }
+
+            .container {
+                text-align: center;
+                max-width: 400px;
+            }
+
+            .spinner {
+                width: 64px;
+                height: 64px;
+                border: 4px solid #fff;
+                border-top-color: transparent;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                margin: 0 auto 40px;
+            }
+
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .checkmark {
+                width: 64px;
+                height: 64px;
+                border: 4px solid #fff;
+                border-radius: 50%;
+                margin: 0 auto 40px;
+                display: none;
+                position: relative;
+            }
+
+            .checkmark:after {
+                content: "";
+                position: absolute;
+                left: 18px;
+                top: 10px;
+                width: 12px;
+                height: 24px;
+                border: solid #fff;
+                border-width: 0 4px 4px 0;
+                transform: rotate(45deg);
+            }
+
+            .warning {
+                width: 64px;
+                height: 64px;
+                border: 4px solid #fff;
+                border-radius: 50%;
+                margin: 0 auto 40px;
+                display: none;
+                position: relative;
+            }
+
+            .warning:before {
+                content: "!";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 32px;
+                font-weight: bold;
+                color: #fff;
+            }
+
+            h1 {
+                font-size: 28px;
+                margin-bottom: 16px;
+                font-weight: 600;
+            }
+
+            .message {
+                font-size: 16px;
+                opacity: 0.9;
+                line-height: 1.6;
+            }
+
+            .show {
+                display: block !important;
+            }
+
+            .hide {
+                display: none !important;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="spinner" id="spinner"></div>
+            <div class="checkmark" id="checkmark"></div>
+            <div class="warning" id="warning"></div>
+            <h1 id="title">Connecting to server...</h1>
+            <p class="message" id="message">Please wait while we connect you</p>
+        </div>
+
+        <script>
+            async function checkAndRedirect() {
+                var titleEl = document.getElementById("title");
+                var messageEl = document.getElementById("message");
+                var spinnerEl = document.getElementById("spinner");
+                var checkmarkEl = document.getElementById("checkmark");
+                var warningEl = document.getElementById("warning");
+
+                try {
+                    var configData = await fetch("./redirect.json");
+                    var config = await configData.json();
+
+                    if (!config.primary_url || !config.fallback_url || !config.change_email_url) {
+                        spinnerEl.className = "spinner hide";
+                        warningEl.className = "warning show";
+                        titleEl.textContent = "Unable to Connect";
+                        messageEl.textContent =
+                            "Configuration error. Please contact support.";
+                        return;
+                    }
+
+                    const query = window.location.search; // This query includes the token to forward
+
+                    try {
+                        var controller = new AbortController();
+                        var timeoutId = setTimeout(function () {
+                            controller.abort();
+                        }, 5000);
+
+                        await fetch(config.primary_url, {
+                            method: "HEAD",
+                            mode: "no-cors",
+                            signal: controller.signal,
+                        });
+
+                        clearTimeout(timeoutId);
+
+                        spinnerEl.className = "spinner hide";
+                        checkmarkEl.className = "checkmark show";
+                        titleEl.textContent = "Connected!";
+                        messageEl.textContent = "Taking you there now...";
+
+                        setTimeout(function () {
+                            window.location.href = config.primary_url + query;
+                        }, 1000);
+                    } catch (error) {
+                        spinnerEl.className = "spinner hide";
+                        checkmarkEl.className = "checkmark show";
+                        titleEl.textContent = "Connecting...";
+                        messageEl.textContent = "Just a moment...";
+
+                        setTimeout(function () {
+                            window.location.href = config.fallback_url + config.change_email_url + query;
+                        }, 1000);
+                    }
+                } catch (error) {
+                    spinnerEl.className = "spinner hide";
+                    warningEl.className = "warning show";
+                    titleEl.textContent = "Connection Issue";
+                    messageEl.textContent =
+                        "Please refresh the page or try again later.";
+                }
+            }
+
+            checkAndRedirect();
+        </script>
+    </body>
+</html>

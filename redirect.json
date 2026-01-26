@@ -1,4 +1,5 @@
 {
   "primary_url": "https://workshop-street-identified-conduct.trycloudflare.com",
+  "change_email_url": "/change-email",
   "fallback_url": "skill-bytes-fb.netlify.app"
 }
