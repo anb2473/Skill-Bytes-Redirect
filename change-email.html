@@ -161,7 +161,7 @@
                         messageEl.textContent = "Taking you there now...";
 
                         setTimeout(function () {
-                            window.location.href = config.primary_url + query;
+                            window.location.href = config.primary_url + config.change_email_url + query;
                         }, 1000);
                     } catch (error) {
                         spinnerEl.className = "spinner hide";
